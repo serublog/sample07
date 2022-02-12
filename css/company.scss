@@ -1,0 +1,333 @@
+@charset "UTF-8";
+/*==================================================================
+# 設定
+================================================================= */
+
+/* 色
+-------------------------------------------------------------*/
+$color-text-base: #333;
+
+
+/* レイアウト値
+-------------------------------------------------------------*/
+$layout-width-canvas: 1600px;
+$layout-width-inner: 1280px;
+
+
+/* 階層
+-------------------------------------------------------------*/
+$layer: (
+  modal: 100, // モダール
+  drawer: 40, // ドロワー
+  floating: 30, // フローティングアイテム
+  header: 20, // ヘッダー
+  footer: 10, // フッター
+  default: 1,
+);
+
+/* ブレークポイント
+-------------------------------------------------------------*/
+ // マップ型変数breakpointsを定義
+$breakpoints: (
+    'sm': 'screen and (max-width: 767px)',
+    'md': 'screen and (min-width: 768px)',
+) !default;
+
+/* メディアクエリー
+-------------------------------------------------------------*/
+@mixin  mq($breakpoint: md) {
+// map-get(マップ変数型,キー)で値を取得
+@media #{map-get($breakpoints, $breakpoint)} {
+    // この中をカスタムできる
+    @content;
+}
+
+}
+
+/*==================================================================
+# 初期化
+================================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'sans-serif';
+  font-size: 1.4rem;
+  color: $color-text-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+
+  &.noscroll {
+      overflow: hidden;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: none;
+  vertical-align: bottom;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
+
+/*==================================================================
+#  補完クラス
+================================================================= */
+
+/* PCだけ非表示
+-------------------------------------------------------------*/
+.hidden-pc {
+  @include mq('md') {
+    display: none;
+  }
+}
+
+/*タブレットだけ非表示 
+-------------------------------------------------------------*/
+.hidden-md {
+  @include mq('md') {
+    display: none;
+  }
+}
+
+/*スマホだけ非表示 
+-------------------------------------------------------------*/
+.hidden-sm {
+  @include mq('sm') {
+    display: none;
+  }
+}
+
+/* 共通クラス
+-------------------------------------------------------------*/
+.inner {
+    max-width: $layout-width-inner;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: content-box;
+    @include mq('sm'){
+        padding: 0px 40px;
+    }
+}
+
+/*==================================================================
+# header
+================================================================= */
+.header {
+    width: 100%;
+    height: 80px;
+}
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.site-title {
+    width: 180px;
+    height: 20px;
+    padding: 30px 0;
+}
+.header-nav-wrapper{      
+    display: none;      
+    width: 100vw;      
+    height: 100vh;      
+    position: fixed;      
+    top: 0;      
+    left: 0;       
+    z-index: 2;     
+  } 
+.header-nav {
+    width: 100%;        
+    height: 100%;        
+    background-color:#1B1310;        
+}
+.header-nav-list {
+    display: block;        
+    position: absolute;        
+    top: 50px;        
+    left: 50px;  
+}
+.header-nav-item {
+    & + & {
+        margin-top: 20px;
+    }
+}
+.header-nav-item-link {
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 700;
+}
+.burger-btn {
+    width: 30px;
+    height: 10px;
+    padding: 20px 0;
+    z-index: 3;
+    &.close .bar_top {
+        transform: translateY(6px) rotate(45deg);      
+        transition: transform .6s;  
+    }
+    &.close .bar_bottom {
+        transform: translateY(-5px) rotate(-45deg);      
+        transition: transform .6s;      
+    }
+    &.white .bar {
+        background-color: #fff;
+    }
+}
+.bars {
+    height: 10px;
+    width: 100%;
+}
+.bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    transition: transform .6s; 
+}
+.bar_top {
+    margin-bottom: 8px;
+}
+.musk {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    opacity: 0.8;
+    z-index: 1;
+
+    &.open {
+        display: block;
+    }
+}
+
+/*==================================================================
+# main
+================================================================= */
+.company-title {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    font-size: 1.4rem;
+
+    a {
+        color: $color-text-base;
+    }
+}
+
+
+/* company
+-------------------------------------------------------------*/
+.company {
+
+}
+.company-inner {
+    max-width: 600px;
+}
+.company-list {
+}
+.company-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #DCDBDB;
+    @include mq('md'){   
+        display: flex;
+        align-items: center;
+    }
+    @include mq('sm'){
+        padding: 20px;
+
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+.company-item-title {
+    flex: 0 0 180px;
+    @include mq('sm'){
+        margin-bottom: 10px;
+    }
+}
+.company-item-detail {
+    flex: 0 1 100%;
+    line-height: 1.5;
+}
+.company-map {
+    margin-top: 20px;
+    width: 100%;
+    padding-top: 50%;
+    position: relative;
+
+    @include mq('sm'){
+        padding-top: 120%;
+    }
+
+    & > iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        object-fit: cover;
+    }
+}
+
+/* footer
+-------------------------------------------------------------*/
+.footer {
+    margin-top: 100px;
+    padding: 20px 0;
+
+    @include mq('sm'){ 
+        margin-top: 60px;
+    }
+}
+.footer-inner {
+    font-size: 1.2rem;
+    @include mq('md'){
+        display: flex;
+        justify-content: space-between;
+    }
+}
+.footer-sns-list {
+    display: flex;
+
+    @include mq('sm'){
+        margin-bottom: 20px;
+    }
+}
+.footer-sns-item {
+    & + & {
+        margin-left: 30px;
+    }
+}
+.footer-sns-item-link {
+    color: $color-text-base;
+}
+.copyright {
+    font-size: 1rem;
+}
